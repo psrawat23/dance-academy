@@ -1,0 +1,531 @@
+
+@import url("./variables.css");
+
+  
+.service-pop.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    -webkit-transform: translate3d(0,0,0);
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+    color:var(--light);
+    animation: blowUpModalTwo 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  
+  
+  .service-pop.modal.show{
+    animation: blowUpModal 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  
+  
+  @keyframes blowUpModal {
+    0% {
+        transform: scale(0);
+   }
+    100% {
+        transform: scale(1);
+   }
+  }
+  
+  @keyframes blowUpModalTwo {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+   }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+   }
+  }
+  
+  .service-pop .modal__btn:hover, .modal__btn:focus {
+    background: var(--focus);
+    border-color: var(--focus);
+    transform: translateY(-0.2rem);
+  }
+  
+  .service-pop .modal__btn {
+    margin-top:1rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 100rem;
+    color: inherit;
+    background: transparent;
+    font-size: .8rem;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .service-pop .modal-cancel-btn{
+    width: 1.7rem;
+    color: white;
+    height: 1.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: 100rem;
+    color: inherit;
+    font-size: 2.2rem;
+    position: absolute;
+    top: 0.6rem;
+    right: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1px;
+    transition: .2s;
+  }
+  
+  
+  .service-pop .modal-cancel-btn::before {
+    content: '×';
+    transform: translateY(-0.1rem);
+    color:var(--light) !important;
+  font-size: 1.5rem;
+  }
+  .service-pop .modal-cancel-btn:hover{
+    border: 2px solid var(--bs-white);
+    transition: all 0.4ms ease-out;
+  }
+  
+
+
+  
+  .service-pop.modal.show{
+    animation: blowUpModal 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  
+  
+  @keyframes blowUpModal {
+    0% {
+        transform: scale(0);
+   }
+    100% {
+        transform: scale(1);
+   }
+  }
+  
+  @keyframes blowUpModalTwo {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+   }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+   }
+  }
+  
+  .service-pop .modal__btn:hover, .modal__btn:focus {
+    background: var(--focus);
+    border-color: var(--focus);
+    transform: translateY(-0.2rem);
+  }
+  
+
+  
+  
+  .modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .modal.fade .modal-dialog {
+      transition: none;
+    }
+  }
+  
+  .modal.show .modal-dialog {
+    transform: none;
+  }
+  
+  .modal.modal-static .modal-dialog {
+    transform: scale(1.02);
+  }
+  
+  .modal-dialog-scrollable {
+    height: calc(100% - 1rem);
+  }
+  
+  .modal-dialog-scrollable .modal-content {
+    max-height: 100%;
+    overflow: hidden;
+  }
+  
+  .modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+  }
+  
+  .modal-dialog-centered {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 1rem);
+  }
+  
+  .service-pop.modal .modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+    padding: 0rem 1rem;
+    border-radius: 0.8rem;
+    color: var(--light);
+    background: var(--modal-background);
+    /* box-shadow: var(--m-shadow, .4rem .4rem 10.2rem .2rem) hsl(236deg 13% 42% / 30%); */
+    font-family: monospace;
+      text-transform: uppercase;
+   
+  }
+  
+
+  .service-pop .modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0.5rem;
+    pointer-events: none;
+    top:3rem;
+  
+  }
+  
+  
+  .service-pop .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+  }
+  
+  .service-pop .modal-backdrop.fade {
+    opacity: 0;
+  }
+  
+  .service-pop .modal-backdrop.show {
+    opacity: 0.5;
+  }
+  
+  .service-pop .modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+  }
+  
+  .service-pop .modal-header .btn-close {
+    padding: 0.5rem 0.5rem;
+    margin: -0.5rem -0.5rem -0.5rem auto;
+  }
+  
+  .service-pop .modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-size: calc(.8rem + .4vw);
+  }
+  
+  .service-pop .modal-list-item {
+    font-size: calc(.7rem + .3vw);
+    letter-spacing: 1px;
+    transition: all 0.5s ease-in-out;
+  
+  }
+  
+  
+  .service-pop .modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+  }
+  
+  
+  
+  .service-pop .modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+  }
+  
+  .service-pop .modal-footer > * {
+    margin: 0.25rem;
+  }
+  
+  @media (max-width: 576px) {
+  
+  
+    .modal__btn {
+  
+        padding: 0.5rem 0.6rem;
+      
+        font-size: .6rem;
+    
+      }
+
+      .gap-2 {
+        gap: 0.5rem !important;
+      }
+    
+    .modal-dialog{
+      margin: 2rem 0.5rem !important;
+    }
+  
+  }
+
+
+  @media (max-width: 576px) {
+
+    .service-pop .modal__btn {
+
+      padding: 0.5rem 0.6rem;
+    
+      font-size: .6rem;
+  
+    }
+  }
+
+
+  @media (min-width: 576px) {
+
+
+  
+    .service-pop .modal-dialog {
+      max-width:600px !important;
+      margin: 1.75rem auto;
+    }
+    .service-pop .modal-dialog-scrollable {
+      height: calc(100% - 3.5rem);
+    }
+    .service-pop .modal-dialog-centered {
+      min-height: calc(100% - 3.5rem);
+    }
+    .service-pop .modal-sm {
+      max-width: 300px;
+    }
+  }
+
+/* customize the reel link and reel song name input box*/
+.service-pop.modal .input-group>.form-control, .service-pop.modal .form-group>.form-control{ 
+    background: initial;
+    color: white;
+    box-shadow: -1px 4px 6px 1px #1f1c31;
+  }
+  .service-pop.modal .input-group>.form-control::placeholder, .service-pop.modal .form-group>.form-control::placeholder{
+  
+    color:inherit;
+    font-size: calc(.6rem + .4vw);
+  }
+  
+  .service-pop.modal .form-control:focus{
+    border-color: none;
+  }
+
+  
+
+
+  /* Button Design */
+
+
+.btn-design{
+  
+      transition: all 0.5s ease-in-out;
+  }
+  
+  .btn-transparent{
+    background-color: transparent;
+  color: var(--bs-custome-blue);
+  box-shadow: 0 12px 35px 20px rgb(0 0 0 / 10%) !important;
+  
+  }
+  
+  .btn-design:hover, .btn-design:active{
+    background-color: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: 1px solid var(--bs-primary) !important;
+    transition: all 0.5s ease-in-out;
+  
+  }
+  
+  
+  
+  @media(max-width: 768px) {
+  
+    .dash-report{
+      width: 100%;
+    }
+  
+   
+    .sidebar-toggle{
+      display: block;
+    }
+    
+    .btn-design{
+    border-radius: 0.1rem !important;
+    padding: 0.1rem 0.6rem !important;
+    font-size: .45rem !important;
+   
+    }
+  
+  }
+  
+  
+  @media(min-width: 768px) {
+  
+    .btn-design,
+    .btn-transparent{
+    
+      border-radius: .1rem !important;
+        padding: 0.4rem 1.3rem !important;
+        font-size: .6rem !important;
+        z-index: 0;
+    
+    }
+    
+  
+  }
+
+  .bg-dark{
+    background-color: #171717 !important;
+  }
+
+  .red-color-gradient{
+    color: white;
+    outline: red;
+   background-image: linear-gradient(var(--red-color-gradient));
+   background-image:-webkit-linear-gradient(var(--red-color-gradient));
+  }
+
+/* 
+//////////////////////////////// 
+ Search Box 
+/////////////////////////////////// 
+ */
+
+
+/* Searchbar */
+
+.searchboxDiv{
+  border-radius: 5px;
+  color:var(--bs-blue);
+  box-shadow: 0 12px 35px 20px rgb(0 0 0 / 10%);
+  opacity: 0.96;
+}
+.searchboxDiv .searchButton{
+  background: white;
+  border: none;
+  color:black
+}
+
+
+.searchboxDiv .searchbox:hover, .searchboxDiv .searchbox, .searchboxDiv .searchbox:hover, .searchboxDiv .searchbox:focus{
+  box-shadow: none;
+  border: none;
+  color:black;
+}
+
+
+
+
+/* Spinner hide loading content */
+.visually-hidden,
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -0.125em;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: 0.75s linear infinite spinner-border;
+  top: 4rem;
+  left:50%;
+}
+
+/* Success Message  in the Modal */
+
+.thank-content h1{
+  font-size:calc(1.7rem + .4vw);
+  letter-spacing:1px;
+  color:var(--bs-green);
+  margin:auto;
+  text-align: center;
+  transition: all 0.5s ease-in-out;
+
+}
+
+
+
+.text-start {
+  text-align: left !important;
+}
+
+.text-end {
+  text-align: right !important;
+}
+/* resize the pagination font */
+.pagination-container .page-item{
+  font-size: calc(.5rem + .4vw) !important;
+}
+
+/* iphone pagination . */
+.pagination-container .page-item::marker{
+  content: none;
+}
+
+
+.form-control {
+  display: block;
+  width: 100%;
+  font-size: calc(.6rem + .4vw) !important;
+  font-weight: 400;
+  line-height: 1;
+  color: #212529;
+  background-color: color(white);
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 2px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: all 0.5s ease-in-out;
+
+}
+
+
+/* Scroll the table in artist list for campaign */
+.scroll-table{
+  max-height: 500px;
+  overflow: auto;
+}

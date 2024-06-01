@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+
+        /* For printing when click on the button */
+    @media print {
+            @page {
+      size: A4; /* DIN A4 standard, Europe */
+      margin:0;
+
+
+      
+    }
+    
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h2 {
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 18px;
+            color: #6c757d;
+        }
+        .receipt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .receipt-table th, .receipt-table td {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .receipt-table th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            text-align: left;
+            width: 30%;
+        }
+        .receipt-table td {
+            color: #6c757d;
+        }
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+        }
+        .signature p {
+            margin: 0;
+            font-size: 16px;
+            color: #6c757d;
+        }
+        .signature strong {
+            color: #007bff;
+            font-weight: bold;
+        }
+     
+            .print-btn {
+                display: none;
+            }
+        }
+
+    /* For normal view */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h2 {
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 18px;
+            color: #6c757d;
+        }
+        .receipt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .receipt-table th, .receipt-table td {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .receipt-table th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            text-align: left;
+            width: 30%;
+        }
+        .receipt-table td {
+            color: #6c757d;
+        }
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+        }
+        .signature p {
+            margin: 0;
+            font-size: 16px;
+            color: #6c757d;
+        }
+        .signature strong {
+            color: #007bff;
+            font-weight: bold;
+        }
+     
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Receipt</h2>
+            <p><strong>Dance Studio</strong><br>+91-884330682, +91-730345354051</p>
+        </div>
+        <table class="receipt-table">
+            <tbody>
+                <tr>
+                    <th>Receipt Number:</th>
+                    <td>{{obj.id}}</td>
+                </tr>
+                <tr>
+                    <th>Student Name:</th>
+                    <td>{{obj.parent_book.student}}</td>
+                </tr>
+                <tr>
+                    <th>Subscription Start Date:</th>
+                    <td> {{obj.subscription_start_date|date:"d M Y"}}</td>
+                </tr>
+                <tr>
+                    <th>Subscription End Date:</th>
+                    <td> {{obj.subscription_end_date|date:"d M Y"}}</td>
+                </tr>
+                <tr>
+                    <th>Payment Date:</th>
+                    <td>{{obj.date|date:"d M Y"}}</td>
+                </tr>
+
+                <tr>
+                    <th>Total Amount:</th>
+                    <td>{{obj.total_fees}}</td>
+                </tr>
+                <tr>
+                    <th>Amount Paid:</th>
+                    <td>{{obj.paid_fees}}</td>
+                </tr>
+
+                <tr>
+                    <th>Due Amount:</th>
+                    <td>{{obj.due}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <div class="signature">
+            <p><strong>Authorized Signature:</strong> _____________________________</p>
+        </div> -->
+      
+    </div>
+<div class="text-center">
+    <button class="btn btn-primary print-btn" onclick="printReceipt()">Print Receipt</button>
+</div>
+<script>
+        function printReceipt() {
+            window.print();
+        }
+    </script>
+  
+</body>
+</html>

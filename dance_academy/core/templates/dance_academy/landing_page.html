@@ -1,0 +1,30 @@
+
+{% extends 'dance_academy/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        .quote {
+            font-size: 24px;
+            font-style: italic;
+        }
+    </style>
+{% endblock %}
+
+{% block bodyblock %}
+<div class="container jumbotron">
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Dance Academy Software</h1>
+        <p class="lead">Your one-stop solution for Manage Dance Academy</p>
+        <hr class="my-4">
+        <p> {% if is_authenticated %}   <a href="{% url 'dance-academy:index' %}"> Access Software </a> {% endif %} </p>
+        <p> {% if is_authenticated %}   <a href="{% url 'dance-academy:index' %}"> Access Software </a> {% endif %} </p>
+      
+    </div>
+</div>
+{% endblock %}

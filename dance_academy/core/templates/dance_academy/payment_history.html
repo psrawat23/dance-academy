@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+{% extends 'dance_academy/base.html' %} 
+{%block bodyblock %}
+ {% load static %}
+
+ <style>
+
+td{
+  word-break:break;
+  
+}
+.studentWrapper{
+    
+}
+
+
+.heading{ 
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #000000;
+    margin-top:15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.table td img{
+
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+
+}
+
+ </style>
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<!-- TO Select and search a Student -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.css" integrity="sha512-+dSrbTGc/L04jAcqxlcnZUPXjnyKy6fdgmWQdsRILqZgjMOW8YfwWCQsna7XGXJDSaDvKW0ill4FgRmWX2Ki8w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+ <body>
+
+    {% include "dance_academy/navbar.html" %}
+
+  <div>
+    <h2 class="heading">
+        Payment History
+    </h2>
+  </div>
+
+  <main role="main" class="container">
+
+    <h3>Filter</h3>
+    <form method="GET" action=".">
+
+      <div class="form-row">
+
+
+   
+       
+   
+        <div
+        class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"
+      >
+        <div class="form-group">
+            <label for="id_student_account">Select Student</label>
+            <select
+              class="form-select"
+              id="id_student_account"
+              name="student_account"
+            >
+    
+            <option value="">Select Student Id...</option>
+  
+              {% for student in all_students %}
+  
+              <option value="{{student.id}}">{{student.student}}</option>
+  
+             {% endfor %}
+            </select>
+  
+        </div>
+        </div>
+
+        <div
+        class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"
+      >
+        <div class="form-group">
+          <label for="id_payment_month">Payment Month</label>
+          <input type="month" class="form-control" id="id_payment_month" name="payment_month">
+        </div>
+     </div>
+
+     <div
+     class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"
+   >
+     <div class="form-group">
+       <label for="id_joining_month">Joining Month</label>
+       <input type="month" class="form-control" id="id_joining_month" name="joining_month">
+     </div>
+  </div>
+
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="id_clear_check" name="clear_check">
+          <label class="form-check-label" for="id_clear_check">
+            Clear
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+<div class="row mt-3">
+
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+
+
+
+        <ul class="list-group">
+            {% if total_received %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Total Fees
+              <h5 class="text-primary">
+                {{total_received}}
+              </h5>
+            </li>
+            {% endif %}
+            
+            {% if total_due %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Total Due
+              <h5 class="text-primary">{{total_due}}</h5>
+            </li>
+            {% endif %}
+
+            {% if payment_month %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Payment Month
+              <h5 class="text-primary">{{payment_month}}</h5>
+            </li>
+            {% endif %}
+
+            {% if joining_month %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Joining Month
+              <h5 class="text-primary">{{joining_month}}</h5>
+            </li>
+            {% endif %}
+
+            {% if student_account %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Student Account
+              <h5 class="text-primary">{{student_account.student}}</h5>
+            </li>
+            {% endif %}
+
+          </ul>
+          
+        
+
+      
+    </div>
+</div>
+  </main>
+
+<div class="container studentWrapper" style="margin-top:10px;">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th> Account </th>
+                    <th>Payment Date</th>
+                    <th>Subscription start date</th>
+                    <th>Subscription end date</th>
+                    <th> Current Plan </th>
+                    <th> Total Fee </th>
+                    <th>Received</th>
+                    <th>Due</th>
+                    <th>Action</th>
+                 
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for log in AccountLog %}
+                <tr>
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        <a href="{% url 'dance-academy:student' id=log.parent_book.student.id %}">
+                            
+
+                            {{log.parent_book}}
+                        </a></td>
+                     </td>
+                    <td>
+                     {{log.date|date:"d M Y"}}
+
+                    </td>
+                    <td>{{log.subscription_start_date|date:"d M Y"}}</td>
+                    <td>
+                        {{log.subscription_end_date|date:"d M Y"}}
+                      
+                    
+                    </td>
+                    <td>
+                        
+                        {% for plan, value in log.plan_type %}
+                            
+                        {% if plan == log.current_plan %}
+
+                        {{value}}
+                            
+                        {% endif %}
+                            
+                    {% endfor %}
+                       
+
+                    </td>
+                    <td>
+                        {{log.total_fees}}
+                    </td>
+                    <td>
+                       {{log.paid_fees}}
+                       
+                    
+                    </td>
+                    <td>
+                        {{log.due}}
+                        
+                     
+                     </td>
+                     <td>
+
+
+                        <a href="{% url 'dance-academy:studentAccountLogEdit' id=log.id %}" target="_blank" class="text-success">   <span class="mr-2 pl-3"> <i class="bi bi-eye" style="font-size: 15px;"></i> </span>
+                        </a>
+                  
+                        <a href="{% url 'dance-academy:feeReceipt' id=log.id %}" target="_blank">   <span class="ml-2"> <i class="bi bi-printer" style="font-size: 15px;"></i> </span>
+                        </a>
+
+
+                     </td>
+                </tr>
+                {% endfor %}
+         
+            </tbody>
+          
+        </table>
+    </div>
+
+    
+
+      
+    
+ </body>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+ 
+ <script>
+
+
+var jq14 = jQuery.noConflict(true); 
+
+(function ($) {
+    $(document).ready(function () {
+            $("select").selectize({
+                // placeholder: "Search...",
+                // allowClear: true
+            });
+    });
+}(jq14));
+
+
+$(document).ready(function() {
+    // $("#id_student_account").selectize();
+    $('#example').DataTable();
+
+});
+
+
+ </script>
+
+
+
+{%endblock bodyblock %}

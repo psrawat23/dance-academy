@@ -1,0 +1,85 @@
+/* This Code is only for the Budget range selector available in the campaign page to select the budget */
+::selection{
+  color: #fff;
+  background: #17A2B8;
+}
+.price-selector .wrapper{
+  width: 100%;
+  border-radius: 10px;
+  padding: 20px 25px 40px;
+  box-shadow: 0 12px 35px 20px rgb(0 0 0 / 10%);
+  color: var(--bs-body-color);
+  font-weight: 500;
+}
+
+.price-selector .price-input{
+  width: 100%;
+  display: flex;
+}
+.price-selector .price-input .field{
+  display: flex;
+  align-items: center;
+}
+.price-selector .field input{
+ 
+  text-align: center;
+  -moz-appearance: textfield;
+}
+.price-selector input[type="number"]::-webkit-outer-spin-button,
+.price-selector input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.price-selector .price-input .separator{
+  width: 130px;
+  display: flex;
+  font-size: 19px;
+  align-items: center;
+  justify-content: center;
+}
+.price-selector .slider{
+  height: 5px;
+  position: relative;
+  background: #ddd;
+  border-radius: 5px;
+}
+.price-selector .slider .progress{
+  height: 100%;
+  left: 25%;
+  right: 25%;
+  position: absolute;
+  border-radius: 5px;
+  background: #17A2B8;
+}
+.price-selector .range-input{
+  position: relative;
+}
+.price-selector .range-input input{
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: -5px;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+.price-selector input[type="range"]::-webkit-slider-thumb{
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  background: #17A2B8;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}
+.price-selector input[type="range"]::-moz-range-thumb{
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+  background: #17A2B8;
+  pointer-events: auto;
+  -moz-appearance: none;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}

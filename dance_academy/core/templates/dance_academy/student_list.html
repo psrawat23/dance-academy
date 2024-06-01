@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html>
+{% extends 'dance_academy/base.html' %} 
+{%block bodyblock %}
+ {% load static %}
+
+ <style>
+
+td{
+  word-break:break;
+  
+}
+.studentWrapper{
+    
+}
+
+ .heading{ 
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #000000;
+    margin-top:15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.table td img{
+
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+
+}
+
+ </style>
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<body>
+
+    {% include "dance_academy/navbar.html" %}
+
+  <div>
+    <h2 class="heading">
+        Student List
+    </h2>
+  </div>
+
+<div class="container studentWrapper" style="margin-top:10px;">
+  
+    <table id="example" class="table table-striped table-bordered table2excel" style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th> Picture </th>
+                    <th>Student Name</th>
+                    <th>Phone Number</th>
+                    <th>Batch</th>
+                    <th>Timing</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                 
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for student in students %}
+                <tr>
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+                    <td>{{student.student_picture_view}}</td>
+                    <td>
+                        {% if student.last_name %}
+                        {{ student.first_name|add:" "|add:student.last_name}} 
+                        {% else %}
+                        {{ student.first_name }} 
+                        {% endif %}
+
+                    </td>
+                    <td>{{student.phone_number}}</td>
+                    <td>
+                        {% for index, batch in student.batch_list %}
+                       
+                        {% if index == student.batch %}
+                        {{batch}}
+                        {% endif %}
+                        {% endfor %}
+                      
+                    
+                    </td>
+                    <td>
+                        
+                        {% for index, timing in student.timing_list %}
+                        {% if index == student.timing %}
+                        {{timing}}
+                        {% endif %}
+                        {% endfor %}
+
+                       
+
+                    </td>
+                    <td>{% if student.active %}
+                        <i class="bi bi-check" style="font-size:25px;color: green;"></i>
+                        {% else %}
+                        <i class="bi bi-x" style="font-size:25px;color: red;"></i>
+
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'dance-academy:student' id=student.id %}">   <span class="mr-2 pl-3"> <i class="bi bi-eye" style="font-size: 15px;"></i> </span>
+                        </a>
+                      
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#my-modal">   <span><i class="bi bi-trash fa-fw  fa-3x" style="font-size: 15px;"></i></span>
+                       </button>
+                        
+                       <a href="{% url 'dance-academy:studentPrinter' id=student.id %}">   <span class="mr-2 pl-3"> <i class="bi bi-printer" style="font-size: 15px;"></i> </span>
+                       </a>
+                       
+                        <div class="container d-flex justify-content-center">
+                        
+                            <div id="my-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content border-0">   
+                                        <div class="modal-body p-0">
+                                            <div class="card border-0 p-sm-3 p-2 justify-content-center">
+                                                <div class="card-header pb-0 bg-white border-0 "><div class="row"><div class="col ml-auto"><button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div> </div>
+                                                <p class="font-weight-bold mb-2"> Are you sure you want to delete this ?</p><p class="text-muted "> </p>     </div>
+                                               
+                                                  <div class="card-body px-sm-4 mb-2 pt-1 pb-0"> 
+                                                    <div class="row justify-content-end no-gutters"><div class="col-auto">
+                                                        <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <form method="POST" action="{% url 'dance-academy:deleteRecord'%}">
+                
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="id" value="{{ student.id }}">
+                                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+         
+            </tbody>
+          
+        </table>
+    </div>
+
+    
+
+      
+    
+ </body>
+
+ <script>
+
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+
+
+
+ </script>
+
+
+
+
+{%endblock bodyblock %}

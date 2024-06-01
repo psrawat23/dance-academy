@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Luxurious+Roman&display=swap');
+body {
+    font-size: .875rem;
+  }
+  
+  .feather {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+  }
+  
+  /*
+   * Sidebar
+   */
+  
+  #sidebar.sidebar {
+    background: rgba(29, 130, 234, 1);
+    /* width: 222px; */
+    box-shadow: 0 0 9px 0 rgb(39 75 196);
+
+    min-height: calc(100vh - 70px);
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    padding: 0;
+    max-width: 220px;
+    z-index: 11;
+    transition: width 0.25s ease, background 0.25s ease;
+    -webkit-transition: width 0.25s ease, background 0.25s ease;
+
+  }
+  
+
+
+
+
+  
+  
+  .sidebar .nav-link {
+    font-weight: bold;
+    color: white !important;
+  }
+  
+  .sidebar .nav-link .feather {
+    margin-right: 4px;
+    color: #999;
+  }
+  
+  .sidebar .nav-link.active {
+    color: #007bff;
+  }
+
+  .sidebar .nav-link:hover{
+   background-color:var(--bs-warning) !important;
+   border-radius: 3rem !important;
+  } 
+
+  .sidebar .nav .nav-item .nav-link i.menu-icon{
+    color: white;
+    font-weight: 400;
+  }
+  
+  /* sidebar collapse */
+
+  .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[aria-expanded="true"] {
+    border-radius: 0.437rem 0.437rem 0 0;
+    background: var(--bs-warning);
+    border-radius: 3rem;
+  /* .sidebar .nav-link:hover .feather,
+  .sidebar .nav-link.active .feather {
+    color: inherit;
+  } */
+}
+  
+  .sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+    transition: all 0.5s ease-in-out;
+
+  }
+  
+  /*
+   * Navbar
+   */
+  
+  .navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+  }
+  
+  .navbar .form-control {
+    padding: .75rem 1rem;
+    border-width: 0;
+    border-radius: 0;
+  }
+  
+  .form-control-dark {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .1);
+  }
+  
+  .form-control-dark:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+  }
+  
+  /*
+   * Utilities
+   */
+  
+  .border-top { border-top: 1px solid #e5e5e5; }
+  .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+
+  .dash-row .dash-report{
+    margin-left: auto!important;
+  }
+
+
+
+
+
+
+  /* OFFERS WINDOW  */
+.banner{
+  height: 300px;
+    width: 100%;
+    /* background: #c5ced6; */
+    background-image: linear-gradient(
+233deg
+, #aab3bd, transparent);
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 3px 2px 14px 0px grey;
+    font-family: 'Luxurious Roman', cursive;
+    
+}
+
+
+.banner::before {
+    content: '';
+    position: absolute;
+    left: 4rem;
+    top: 1rem;
+
+    width: 80px;
+    height: 80px;
+   color:black;
+    background: steelblue;
+    border-radius: 50%;
+    opacity: 0.6;
+    /* box-shadow: 1px 1px 10px 6px #fefafa; */
+    animation: lighting 2s linear 0ms infinite reverse both;
+  }
+
+@keyframes lighting{
+  0%{
+
+    box-shadow: 1px 1px 16px 4px #fefafa;
+  }
+  100%{
+    
+    box-shadow: 1px 1px 10px 6px #fefafa;
+  
+  }
+}
+
+.banner .banner-offer{
+      /* justify-content: center; */
+      align-items: center;
+      /* justify-items: center; */
+      text-align: center;
+      padding: 60px 20px;
+   
+}
+
+.banner-img img {
+  width: 75%;
+  height: 80%;
+  margin: auto;
+  object-fit: contain;
+  box-shadow: 6px 15px 20px 9px grey;
+  box-shadow: 6px 4px 12px 0px grey;
+  border-radius: 20px;
+  position: relative;
+  top: 1rem;
+  left: 1rem;
+}
+
+
+.banner .banner-offer h2 span{
+font-size: 60px;
+}
+
+
+.text-sm {
+  font-size: 12px;
+}
+.price {
+  font-size: 3em;
+}
+.plan{
+  margin-top: 5rem;
+}
+
+.h3-text{
+  text-align: center;
+}
+
+.sidebar-toggle{
+  display: none;
+}
+/* ToogleButton  */
+
+
+.banner-offer h2 {
+  color: #cc2f2a;
+}
+
+
+
+
+
+.card.card-border-primary {
+    border-top: 3px solid #007bff !important;
+}
+
+
+
+/* Code for Campaign section */
+
+.campaign-table table.table td{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 7px;
+    padding-right: 7px;
+    vertical-align: middle;
+    height: 40px;
+    color: #0C315C;
+    background: #ffffff;
+    border-color: #E1ECF5;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #E1ECF5;
+    font-weight: 400;
+    transition: all 0.5s ease-in-out;
+
+}
+
+.campaign-table table.table th{
+
+  color:var(--bs-custome-blue);
+  font-weight: 600;
+}
+
+#service-table{
+  border-radius: 1rem;
+}
+
+.campaign-table{
+
+  background-color: white;
+  border-radius: 20px;
+  opacity: 0.94;
+  transition: all 0.5s ease-in-out;
+
+}
+
+
+.btn-transparent:hover,
+.btn-transparent:focus
+{
+    border: 1px solid var(--bs-custome-blue);
+    transition: all 0.25s ease-in-out;
+
+}
+
+
+.btn-design{
+  box-shadow: 0 5px 20px 0 var(--bs-primary) !important;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn-transparent{
+  background-color: transparent;
+color: var(--bs-custome-blue);
+box-shadow: 0 12px 35px 20px rgb(0 0 0 / 10%) !important;
+
+}
+
+.btn-design:hover, .btn-design:active{
+  background-color: white !important;
+  color: black !important;
+  box-shadow: none !important;
+  border: 1px solid var(--bs-primary) !important;
+  transition: all 0.5s ease-in-out;
+
+}
+
+
+
+@media(max-width: 768px) {
+
+  .dash-report{
+    width: 100%;
+  }
+
+ 
+  .sidebar-toggle{
+    display: block;
+  }
+  
+  .btn-design{
+  border-radius: 0.1rem !important;
+  padding: 0.1rem 0.6rem !important;
+  font-size: .45rem !important;
+ 
+  }
+
+}
+
+
+@media(min-width: 768px) {
+
+  .btn-design,
+  .btn-transparent{
+  
+    border-radius: .1rem !important;
+      padding: 0.4rem 1.3rem !important;
+      font-size: .6rem !important;
+      z-index: 0;
+  
+  }
+  
+
+}
+
+
+.campaign-table .table>thead {
+  vertical-align: bottom;
+  background: #cfe4fd;
+  transition: all 0.5s ease-in-out;
+
+}
+
+
+
+/* Dropdown menu make it fixed */
+.campaign-section .selectBox{
+  -webkit-appearance: auto;
+  cursor: pointer;
+  box-shadow: 0 12px 35px 20px rgb(0 0 0 / 10%);
+  color: var(--bs-custome-blue);
+  /* border: none; */
+  font-size: small;
+  font-weight: 500;
+  border: none;
+  opacity: 0.8;
+  font-size: calc(.6rem + .4vw);
+}
+
+.campaign-section .selectBox:focus,
+.campaign-section .selectBox:active
+{
+box-shadow: 0 12px 35px 20px rgb(0 0 0 / 10%);
+border: none;
+}
+
+
+/* resize the pagination font */
+.pagination-container .page-item{
+  font-size: calc(.5rem + .4vw) !important;
+}

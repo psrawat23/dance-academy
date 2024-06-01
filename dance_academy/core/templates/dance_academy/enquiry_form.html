@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+{% extends 'dance_academy/base.html' %} 
+{%block bodyblock %}
+ {% load static %}
+ {%load filter%}
+
+ <style>
+
+td{
+  word-break:break;
+  
+}
+.studentWrapper{
+    
+}
+
+ .heading{ 
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #000000;
+    margin-top:15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+.form-group {
+    width: 500px;
+}
+
+ </style>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<!-- TO Select and search a Student -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.css" integrity="sha512-+dSrbTGc/L04jAcqxlcnZUPXjnyKy6fdgmWQdsRILqZgjMOW8YfwWCQsna7XGXJDSaDvKW0ill4FgRmWX2Ki8w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+<body>
+
+    {% include "dance_academy/navbar.html" %}
+
+  <div>
+    <h2 class="heading">
+        Enquiry
+    </h2>
+  </div>
+
+
+  <div class="row justify-content-center mt-5">
+
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+      
+          <div class="row gutters">
+            <div
+              class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+            >
+              <h6 class="mb-2 text-primary">
+                Add Enquiry
+              </h6>
+            </div>
+
+
+            <div
+              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+            >
+              <div class="form-group">
+                <label for="id_name">Student Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="id_name"
+                  name="name"
+                  placeholder="Enter Student Name"
+                required/>
+              </div>
+            </div>
+  
+
+            <div
+              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+            >
+              <div class="form-group">
+                <label for="id_age">Age</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="id_age"
+                  name="age"
+                  placeholder="Enter Student Age"  
+                />
+              </div>
+            </div>
+
+            <div
+              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+            >
+              <div class="form-group">
+                <label for="id_guardian_name">Guardian name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="id_guardian_name"
+                  name="guardian_name"
+                  placeholder="Enter Guardian Name"
+                required/>
+              </div>
+            </div>
+ 
+
+            <div
+            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+          >
+            <div class="form-group">
+              <label for="id_guardian_contact">Guardian Contact</label>
+              <input
+                type="text"
+                class="form-control"
+                id="id_guardian_contact"
+                name="guardian_contact"
+                placeholder="Enter Guardian Contact"
+                
+              required/>
+            </div>
+          </div>
+
+
+          
+  
+            <div
+              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+            >
+            <div class="form-group">
+                <label for="id_note">Any Notes:</label>
+                <textarea class="form-control" id="id_note" name="note" rows="3"></textarea>
+              </div>
+            </div>
+        </div>
+  
+        <div class="row gutters">
+            <div
+              class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+            >
+              <div class="text-right">
+                <button
+                  type="submit"
+                  id="submit"
+                  name="submit"
+                  class="btn btn-primary"
+                  >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+  
+  
+        </form>
+  
+  
+      </div>
+    </div>
+  </div>
+  </div>
+  
+
+
+
+<div class="container studentWrapper mt-5" style="margin-top:10px;">
+    <h4 class="my-3">
+        Enquiry History
+    </h4>
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                  
+                    <th> # </th>
+                    <th>Created On</th>
+                    <th>Name</th>
+                    <th>Guardian Name</th>
+                    <th>Guardian Contact</th>
+                    <th>Age</th>
+                    <th>Note </th>
+              
+                 
+                </tr>
+            </thead>
+            <tbody>
+                {% for enquiry in enquiry_list %}
+                <tr>
+                    <td>
+                        
+                        {{ forloop.counter }}
+
+                    </td>
+                    <td>
+                        {{enquiry.created_on}}
+                    </td>
+                    <td>
+                       {{enquiry.name}}
+                    </td>
+                    <td>
+                      {{enquiry.guardian_name}}
+                    
+                    </td>
+                    <td>
+                        {{enquiry.guardian_contact}}
+                    
+                      </td>
+                      <td>
+                        {{enquiry.age}}
+                    
+                      </td>
+                      <td>
+                        {{enquiry.note}}
+                    
+                      </td>
+
+
+                </tr>
+                {% endfor %}
+         
+            </tbody>
+          
+        </table>
+    </div>
+
+
+
+      
+    
+ </body>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+ <script>
+
+
+var jq14 = jQuery.noConflict(true); 
+
+(function ($) {
+    $(document).ready(function () {
+            $("select").selectize({
+                // placeholder: "Search...",
+                // allowClear: true
+            });
+    });
+}(jq14));
+
+
+$(document).ready(function() {
+    // $("#id_student_account").selectize();
+    $('#example').DataTable();
+
+});
+
+
+ </script>
+
+
+{%endblock bodyblock %}

@@ -1,0 +1,189 @@
+
+{% extends 'dance_academy/base.html' %} {%block bodyblock %}
+
+{%load static%}
+{% load humanize %}
+
+<style>
+	@media print{
+    @page {
+      size: A4; /* DIN A4 standard, Europe */
+      margin:0;
+    }
+	
+    html, body {
+		margin-top:0 !important;
+        width: 210mm;
+        /* height: 297mm; */
+        height: 282mm;
+        font-size: 14px !important;
+        background: #fff;
+        overflow:visible;
+    }
+	.logo-bluered{
+		position: absolute !important;
+	}
+    body {
+        padding-top:15mm;
+    }
+}
+</style>
+<link
+  href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  rel="stylesheet"
+  id="bootstrap-css"
+/>
+{% include "dance_academy/navbar.html" %}
+
+
+<div class="container mt-3">
+
+<div id="htmlContent">
+
+	<div class="container-fluid">
+		
+		
+                <div class="container">
+                    <h2 class="text-center mb-4">Registration Form</h2>
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th scope="row">Student Name:</th>
+                          <td>{{obj}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">DOB:</th>
+                          <td>{{obj.dob|date:'d M Y'}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Contact No:</th>
+                          <td>{{obj.phone_number}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Guardian Name:</th>
+                          <td>{{obj.guardian_name}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Guardian Contact:</th>
+                          <td>{{obj.guardian_contact}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Dance Style:</th>
+                          <td>{{obj.dance_style}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Timing:</th>
+                          <td>
+
+                            
+                            {% for time,value in obj.timing_list %}
+                                
+                                {% if time == obj.timing %}
+
+                                {{value}}
+
+                                    
+                                {% endif %}
+                                    
+                            {% endfor %}
+                                
+                          </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> Do you have any medical problems?</th>
+                            <td>{% if obj.any_medical_problem %}
+                                YES
+                                {% else %}
+                                NO
+                                {% endif %}
+                            </td>
+                          </tr>
+                       
+                      </tbody>
+                    </table>
+                  </div>
+			
+
+
+
+			
+			<div class="col-12">
+			
+
+                  
+                        <div class="container">
+                            <h3>Terms and Conditions</h3>
+                            <ol>
+                              <li>You will be under CCTV surveillance at all times.</li>
+                              <li>Shoes are not allowed inside the academy.</li>
+                              <li>If you wish to dance in shoes, please bring an extra pair separately.</li>
+                              <li>You are responsible for your own belongings. BlueRed Studio will not be held liable for any loss or damage to personal items such as phones, wallets, or money.</li>
+                              <li>Any damage to the academy premises will incur a fine.</li>
+                              <li>Any misconduct will result in legal action.</li>
+                              <li>Dance classes will be one hour long and will not be held on Saturdays and Sundays.</li>
+                              <li>Fees are to be paid in advance at the beginning of each month.</li>
+                              <li>Payments are non-refundable and non-negotiable.</li>
+                              <li>Participants are expected to conduct themselves respectfully and with discipline.</li>
+                              <li>BlueRed Dance Studio reserves the right to dismiss any participant for disruptive behavior or violation of academy rules.</li>
+                              <li>BlueRed Dance Studio is not liable for any injuries sustained during classes or events. Participants are advised to have personal insurance coverage.</li>
+                              <li>Participants or their legal guardians must inform BlueRed Dance Studio of any medical conditions or injuries that may affect their ability to participate safely.</li>
+                              <li>BlueRed Dance Studio may update these terms and conditions periodically, with participants being notified of any changes.</li>
+                              <li>Participants or their legal guardians acknowledge that they have read and understood these terms and conditions. By enrolling in classes at BlueRed Dance Studio, participants agree to abide by these terms and conditions.</li>
+                            </ol>
+                          </div>
+                  
+                    <div>
+
+                    <p>  <strong> Note:</strong> <em>By enrolling in classes at BlueRed Dance studio. participants agree to abide by these terms and conditions</em>
+                    </p>
+                     </div>
+                          
+
+			</div>
+
+            <div class="col-12 mt-3">
+                <ul class="list-unstyled">
+    
+                    <li class="mb-3"><strong>Date: </strong>_________________________________</li>
+                    <li class="mb-3"><strong>Amount Paid:</strong>___________________________</li>
+                    <li class="mb-3"><strong>Payment Mode:</strong>__________________________</li>
+                </ul>
+            </div>
+
+            <div class="row justify-content-center mt-5">
+
+                <div class="position-relative col-6 text-center" style='top:80%'>
+                    <p class="m-0 p-0">_____________________________</p>
+                    <p class="pb-0 mb-0"><strong> Student Signature </strong> </p>
+                    <p class="p-0">(Guardian Signature if minor)</p> 
+                </div>
+
+                <div class="position-relative col-6 text-center" style='top:80%'>
+                    <p class="m-0 p-0">_____________________________</p>
+                    <p class=""><strong> Autorized Signature </strong>{{invoice.user.first_name|capfirst}} {{invoice.user.last_name|capfirst}} </p> 
+                </div>
+             </div>
+
+             
+
+            <div class="row mt-5">
+             <div class="col-12">
+            <p class="m-0 p-0">Thank You</p>
+            <p class="m-0 p-0">BlueRed dance Studio</p>
+            <p class="m-0 p-0">+91-4353434682</p>
+            <p class="m-0 p-0">+91-7303534051</p>
+             </div>
+            </div>
+                
+           
+
+
+         
+				
+		</div>
+		<br>
+		<button onclick="window.print();" class="btn btn-primary  d-lg-block d-print-none">Print Invoice</button>
+	
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+{% extends 'dance_academy/base.html' %} 
+{%block bodyblock %}
+ {% load static %}
+ {%load filter%}
+
+ <style>
+
+td{
+  word-break:break;
+  
+}
+.studentWrapper{
+    
+}
+
+ .heading{ 
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #000000;
+    margin-top:15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+.form-group {
+    width: 500px;
+}
+
+ </style>
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<!-- TO Select and search a Student -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.css" integrity="sha512-+dSrbTGc/L04jAcqxlcnZUPXjnyKy6fdgmWQdsRILqZgjMOW8YfwWCQsna7XGXJDSaDvKW0ill4FgRmWX2Ki8w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+<body>
+
+    {% include "dance_academy/navbar.html" %}
+
+  <div>
+    <h2 class="heading">
+        Student Due List
+    </h2>
+  </div>
+
+
+<div class="container studentWrapper" style="margin-top:10px;">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                  
+                    <th> # </th>
+                    <th>Student Name</th>
+                    <th>Plan Type</th>
+                    <th>Subscription Start Date</th>
+                    <th>Subscription End Date</th>
+                    <th>Total Transaction</th>
+                    <th>Current Fee</th>
+                    <th>Pending Amount</th>
+                    <th>Due</th>
+                 
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in student_accounts %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        
+                       <a href="{% url 'dance-academy:student' id=student.student_id %}"> {{student.student}}</a></td>
+                    <td>
+                        {% for index, batch in student.plan_type %}
+                       
+                        {% if index == student.current_plan %}
+                        {{batch}}
+                        {% endif %}
+                        {% endfor %}
+                    
+                    </td>
+                    <td>
+                        {{student.subscription_start_date}}
+                    </td>
+                    <td>
+                        {{student.subscription_end_date}}
+                    </td>
+                    <td>
+                        {{student.total_amount}}
+                    </td>
+                    <td>{{student.recieved_amount}}</td>
+                    <td>{{student.total_due}}</td>
+
+                    <td> 
+
+                            <span class="text-danger">
+                            
+                               {{ student.subscription_end_date|days_until }} 
+                                  
+                        </span> 
+
+                    </td>
+                </tr>
+                {% endfor %}
+         
+            </tbody>
+          
+        </table>
+    </div>
+
+
+    <hr>
+    <div class="row justify-content-center mt-5">
+
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+          <div class="card h-100">
+            <div class="card-body">
+                <h2 class="heading">
+                   Due Form
+                </h2>
+            <form method="post" enctype="multipart/form-data" action="{% url 'dance-academy:paymentDueForm' %}">
+                {% csrf_token %}
+          
+              <div class="row gutters">
+                <div
+                  class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                >
+                  <h6 class="mb-2 text-primary">
+                    Add Subscription
+                  </h6>
+                </div>
+
+                <div
+                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+              >
+                <div class="form-group">
+                  <label for="id_student_account">Select Student</label>
+                  <select
+                    class="form-select"
+                    id="id_student_account"
+                    name="student_account"
+                  required>
+          
+                    {% for student in all_students %}
+
+                    <option value="{{student.id}}">{{student.student}}({{student.get_due_date}})</option>
+    
+                   {% endfor %}
+                  </select>
+    
+                </div>
+              </div>
+
+                <div
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                >
+                  <div class="form-group">
+                    <label for="id_current_plan">Choose Plan</label>
+                    <select
+                      class="form-select"
+                      id="id_current_plan"
+                      name="current_plan"
+                    required>
+                    
+                      {% for index, value in account_log_obj.plan_type %}
+      
+                      <option value="{{index}}">{{value}}</option>
+      
+                     {% endfor %}
+                    </select>
+      
+                  </div>
+                </div>
+                <div
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                >
+                  <div class="form-group">
+                    <label for="id_total_fees">Total Fee</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="total_fees"
+                      name="total_fees"
+                      placeholder="Enter Fee"
+                      
+                    required/>
+                  </div>
+                </div>
+      
+                <div
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                >
+                  <div class="form-group">
+                    <label for="id_subscription_start_date">Subscription Start Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="id_subscription_start_date"
+                      name="subscription_start_date"
+                    
+                    required/>
+                  </div>
+                </div>
+      
+      
+                <div
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                >
+                  <div class="form-group">
+                    <label for="id_subscription_end_date">Subscription End Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="id_subscription_end_date"
+                      name="subscription_end_date"                                  
+                    required/>
+                  </div>
+                </div>
+      
+      
+                <div
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                >
+                  <div class="form-group">
+                    <label for="id_paid_fees">Recieved Amount</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="id_paid_fees"
+                      name="paid_fees"
+                      placeholder="Enter Received Fee"
+                      
+                    required/>
+                  </div>
+                </div>
+                <div
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                >
+                  <div class="form-group">
+                    <label for="id_due"
+                      >Due Amount</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="due"
+                      id="id_due"
+                      placeholder="Enter Any Due"  
+                      value="0"       
+                    />
+                  </div>
+                </div>
+      
+                <div
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                >
+                <div class="form-group">
+                    <label for="id_description">Any Notes:</label>
+                    <textarea class="form-control" id="id_description" name="description" rows="3"></textarea>
+                  </div>
+                </div>
+            </div>
+      
+            <div class="row gutters">
+                <div
+                  class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                >
+                  <div class="text-right">
+                    <button
+                      type="submit"
+                      id="submit"
+                      name="submit"
+                      class="btn btn-primary"
+                      >
+                      Update
+                    </button>
+                  </div>
+                </div>
+              </div>
+      
+      
+            </form>
+      
+      
+          </div>
+        </div>
+      </div>
+      </div>
+      
+    
+
+      
+    
+ </body>
+ <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+
+
+var jq14 = jQuery.noConflict(true); 
+
+(function ($) {
+    $(document).ready(function () {
+            $("select").selectize({
+                // placeholder: "Search...",
+                // allowClear: true
+            });
+    });
+}(jq14));
+
+
+$(document).ready(function() {
+    // $("#id_student_account").selectize();
+    $('#example').DataTable();
+
+});
+
+
+ </script>
+
+
+{%endblock bodyblock %}

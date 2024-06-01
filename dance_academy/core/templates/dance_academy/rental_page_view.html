@@ -1,0 +1,73 @@
+
+
+<!DOCTYPE html>
+{% extends 'dance_academy/base.html' %} 
+{%block bodyblock %}
+ {% load static %}
+ {%load filter%}
+
+ <style>
+
+td{
+  word-break:break;
+  
+}
+.studentWrapper{
+    
+}
+
+ .heading{ 
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #000000;
+    margin-top:15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+
+ </style>
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+ <body>
+
+    {% include "dance_academy/navbar.html" %}
+
+<div class="container">
+
+    <div class="row justify-content-center mt-5">
+
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+          <div class="card h-100">
+            <div class="card-body">
+                <h2 class="heading">
+                   Rental Page
+                </h2>
+           
+               
+                <form method="post">
+                    {% csrf_token %}
+                    {{ rental_log_form.as_p }}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input type="submit">
+                </form>
+          </div>
+        </div>
+      </div>
+      </div>
+</div>  
+    
+
+      
+    
+ </body>
+
+
+
+{%endblock bodyblock %}

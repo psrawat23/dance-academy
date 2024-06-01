@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+{% extends 'dance_academy/base.html' %} {%block bodyblock %} {% load static %}
+{%load filter%}
+<link
+  href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  rel="stylesheet"
+  id="bootstrap-css"
+/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<style>
+  body {
+    margin: 0;
+    padding-top: 40px;
+    color: #2e323c;
+    background: #f5f6fa;
+    position: relative;
+    height: 100%;
+  }
+  .account-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+  .account-settings .user-profile .user-avatar {
+    margin: 0 0 1rem 0;
+  }
+  .account-settings .user-profile .user-avatar img {
+    width: 180px;
+    height: 180px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+  }
+  .account-settings .user-profile h5.user-name {
+    margin: 0 0 0.5rem 0;
+  }
+  .account-settings .user-profile h6.user-email {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #9fa8b9;
+  }
+  .account-settings .about {
+    margin: 2rem 0 0 0;
+    text-align: center;
+  }
+  .account-settings .about h5 {
+    margin: 0 0 15px 0;
+    color: #007ae1;
+  }
+  .account-settings .about p {
+    font-size: 0.825rem;
+  }
+  .form-control {
+    border: 1px solid #cfd1d8;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: 0.825rem;
+    background: #ffffff;
+    color: #2e323c;
+  }
+
+  .card {
+    background: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+  }
+
+  .profile-pic {
+    color: transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .profile-pic input {
+    display: none;
+  }
+  .profile-pic img {
+    position: absolute;
+    /* object-fit: cover; */
+    width: 210px;
+    height: 210px;
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.35);
+    border-radius: 100px;
+    z-index: 0;
+  }
+  .profile-pic .-label {
+    cursor: pointer;
+    height: 165px;
+    width: 165px;
+  }
+  .profile-pic:hover .-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    color: #fafafa;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 100px;
+    margin-bottom: 0;
+  }
+  .profile-pic span {
+    display: inline-flex;
+    padding: 0.2em;
+    height: 2em;
+  }
+
+
+
+
+
+</style>
+<body>
+  {% include "dance_academy/navbar.html" %}
+
+
+  <div class="container">
+  <div class="row gutters">
+
+    <div class="col-lg-3 col-md-12 col-sm-12 col-12">
+    </div>
+  <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+
+  <ul class="nav nav-tabs ml-2" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Personal details</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Fees and Subscription</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false"></button>
+    </li>
+  </ul>
+</div>
+</div>
+
+
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+    
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="container">
+                <div class="row gutters">
+                  <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <div class="account-settings">
+                          <div class="user-profile">
+                            <div class="user-avatar">
+                              <div class="profile-pic">
+                                <label class="-label" for="id_student_photo">
+                                  <span
+                                    class="glyphicon glyphicon-camera"
+                                  ></span>
+                                  <span>Change Image</span>
+                             
+                                </label>
+                               
+                                <input
+                                  id="id_student_photo"
+                                  name="student_photo"
+                                  accept="image/*"
+                                  type="file"
+                                  onchange="loadFile(event)"
+                                />
+                                {% if obj.student_photo %}
+                                <img
+                               
+                                  src=" {{obj.student_photo.url}}"
+                                  id="output"
+                                  width="200"
+                                />
+                                {% endif %}
+                              </div>
+                            </div>
+                            <h5 class="user-name">
+                              {% if form.last_name.value %} 
+                              {{ form.first_name.value|add:" "|add:form.last_name.value}} 
+                              {% else %}
+                               {{  form.first_name.value }} 
+                               {% endif %}
+                            </h5>
+                            <h6 class="user-email">
+                              {{form.phone_number.value}}
+                            </h6>
+                          </div>
+                          <div class="about">
+                            <h5>Batch</h5>
+                            <p>
+                              {% for index, value in obj.batch_list %} 
+                              {% if index == form.batch.value %} 
+                              {{value}} 
+                              {% endif %}
+                              {% endfor %}
+                            </p>
+                          </div>
+                          <div class="about">
+                            <h5>Timing</h5>
+                            <p>
+                              {% for index, value in obj.timing_list %} 
+                              {% if index == form.timing.value %} 
+                              {{value}}
+                               {%else%}
+                              {% endif %} {% endfor %}
+                            </p>
+                          </div>
+
+                          <div class="about">
+                            <h5>Last update</h5>
+                            <p>{{obj.modified_date}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <div class="row gutters">
+                          <div
+                            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                          >
+                            <h6 class="mb-2 text-primary">Personal Details</h6>
+                          </div>
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_first_name">First Name</label>
+
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="id_first_name"
+                                name="first_name"
+                                placeholder="Enter full name"
+                                value="{{form.first_name.value}}"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_last_name">Last Name</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="id_last_name"
+                                name="last_name"
+                                placeholder="Enter full name"
+                                value="{{form.last_name.value}}"
+                              />
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_dob">Date of birth</label>
+                              <input
+                                type="date"
+                                class="form-control"
+                                id="id_dob"
+                                name="dob"
+                                placeholder="Enter email ID"
+                                value="{{form.dob.value|date:'Y-m-d'}}"
+                              />
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_gender">Gender</label>
+
+                              <select
+                                class="form-select"
+                                name="gender"
+                                id="id_gender"
+                                name="gender"
+                                required
+                              >
+                                {% for index, value in obj.gender_type %}
+                                 {% if index == form.gender.value %}
+                                <option value="{{index}}" selected>
+                                  {{value}}
+                                </option>
+
+                                {%else%}
+                                <option value="{{index}}">{{value}}</option>
+
+                                {% endif %} {% endfor %}
+                              </select>
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_phone">Contact Number</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="id_phone"
+                                name="phone_number"
+                                placeholder="Enter phone number"
+                                value="{{form.phone_number.value}}"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_guardian_name"
+                                >Guardian Name</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                name="guardian_name"
+                                id="id_guardian_name"
+                                placeholder="Enter Guardian Name"
+                                value="{{form.guardian_name.value}}"
+                              />
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_guardian_contact"
+                                >Guardian Contact</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="id_guardian_contact"
+                                name="guardian_contact"
+                                placeholder="Enter Guardian Contact"
+                                value="{{form.guardian_contact.value}}"
+                              />
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_active" class="form-check-label"
+                                >Active</label
+                              >
+                              {% if form.active.value %}
+                              <input
+                                type="checkbox"
+                                class="form-check"
+                                name="active"
+                                id="id_active"
+                                checked
+                              />
+                              {% else %}
+                              <input
+                                type="checkbox"
+                                class="form-check"
+                                name="active"
+                                id="id_active"
+                              />
+                              {%endif%}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row gutters">
+                          <div
+                            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                          >
+                            <h6 class="mt-3 mb-2 text-primary">Documents</h6>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_any_medical_problem"
+                                >Any medical problem</label
+                              >
+
+                              {% if form.any_medical_problem.value %}
+                              <input
+                                type="checkbox"
+                                class="form-check"
+                                name="any_medical_problem"
+                                id="id_any_medical_problem"
+                                checked
+                              />
+                              {% else %}
+                              <input
+                                type="checkbox"
+                                class="form-check"
+                                name="any_medical_problem"
+                                id="id_any_medical_problem"
+                              />
+                              {%endif%}
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_medical_certificate"
+                                >Medical certificate</label
+                              >
+                              <input
+                                type="file"
+                                class="form-control"
+                                name="medical_certificate"
+                                id="id_medical_certificate"
+                              />
+                              <span>
+                                {%if form.medical_certificate.value %}
+                                <p>
+                                  Currently:
+                                  <a href="{{obj.medical_certificate.url}}">
+                                    {{form.medical_certificate.value}}</a
+                                  >
+                                </p>
+                                {%endif%}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_identity_proof_type"
+                                >Identity proof type</label
+                              >
+
+                              <select
+                                class="form-select"
+                                id="id_identity_proof_type"
+                                name="identity_proof_type"
+                              >
+                                {% for index, value in obj.id_type %} 
+                                {% if index == form.identity_proof_type.value %}
+                                <option value="{{index}}" selected>
+                                  {{value}}
+                                </option>
+
+                                {%else%}
+                                <option value="{{index}}">{{value}}</option>
+
+                                {% endif %} {% endfor %}
+                              </select>
+                            </div>
+                          </div>
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_noc_document"
+                                >NOC Documnet</label
+                              >
+                              <input
+                                type="file"
+                                class="form-control"
+                                name="noc_document"
+                                id="id_noc_document"
+                              />
+                              <span>
+                                {% if form.noc_document.value %}
+
+                                <p>
+                                  Currently:
+                                  <a href="{{obj.noc_document.url}}">
+                                    {{form.noc_document.value}}</a
+                                  >
+                                </p>
+
+                                {%endif%}
+                              </span>
+                            </div>
+                          </div>   
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_identity_proof_file"
+                                >Identify Proof</label
+                              >
+                              <input
+                                type="file"
+                                class="form-control"
+                                name="identity_proof_file"
+                                id="id_identity_proof_file"
+                              />
+                              <span>
+                                {% if form.identity_proof_file.value %}
+
+                                <p>
+                                  Currently:
+                                  <a href="{{obj.identity_proof_file.url}}">
+                                    {{form.identity_proof_file.value}}</a
+                                  >
+                                </p>
+
+                                {%endif%}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row gutters">
+                          <div
+                            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                          >
+                            <h6 class="mt-3 mb-2 text-primary">Class Detail</h6>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_dance_style">Dance Style</label>
+                         
+                              <input
+                              type="text"
+                              class="form-control"
+                              name="dance_style"
+                              id="id_dance_style"
+                              placeholder="Enter Dance Style"
+                              value="{{form.dance_style.value}}"
+                            />
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_batch">Batch</label>
+
+                              <select
+                                class="form-select"
+                                id="id_batch"
+                                name="batch"
+                              >
+                                {% for index, value in obj.batch_list %} 
+                                {% if index == form.batch.value %}
+                                <option value="{{index}}" selected>
+                                  {{value}}
+                                </option>
+
+                                {%else%}
+                                <option value="{{index}}">{{value}}</option>
+
+                                {% endif %} {% endfor %}
+                              </select>
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                          >
+                            <div class="form-group">
+                              <label for="id_timing">Timing</label>
+
+                              <select
+                                class="form-select"
+                                id="id_timing"
+                                name="timing"
+                              >
+                                {% for index, value in obj.timing_list %} 
+                                {% if index == form.timing.value %}
+                                <option value="{{index}}" selected>
+                                  {{value}}
+                                </option>
+
+                                {%else%}
+                                <option value="{{index}}">{{value}}</option>
+
+                                {% endif %} {% endfor %}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row gutters">
+                          <div
+                            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                          >
+                            <div class="text-right">
+                              <a href="{% url 'dance-academy:studentList' %}"
+                                ><button
+                                  type="button"
+                                  id="submit"
+                                  name="submit"
+                                  class="btn btn-secondary"
+                                >
+                                  Cancel
+                                </button></a
+                              >
+                              <button
+                                type="submit"
+                                id="submit"
+                                name="submit"
+                                class="btn btn-primary"
+                              >
+                                Update
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+
+            <!-- DataTales Example -->
+                <div class="container">
+                  <div class="row gutters">
+                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <div class="account-settings">
+                           
+                            <div class="about">
+                                <h5>Total Transaction</h5>
+                                <p>
+                               
+                                    {{account_obj.total_amount}}
+                                   
+                                 
+                                </p>
+
+                                
+                                    
+                              </div>
+
+                              <div class="about">
+                                <h5>Total Paid </h5>
+                                <p>
+                               
+                                    {{account_obj.recieved_amount}}
+                                 
+                                </p>
+  
+                              </div>
+
+                              <div class="about">
+                                <h5>Due</h5>
+                                <p>
+                               
+                                    {{account_obj.total_due}}
+                                </p>
+                              </div>
+
+
+                            <div class="about">
+                              <h5>Pending Days</h5>
+                              <p>
+                            
+                            {{ account_obj.subscription_end_date|timeuntil }} 
+
+                        </p>
+                            </div>
+                            <div class="about">
+                              <h5>Current Plan</h5>
+                              <p>
+                                {% for index, value in account_obj.plan_type %}
+                                 {% if index == account_obj.current_plan %}
+                                  {{value}} 
+                                  {%else%}
+                                {% endif %}
+                                 {% endfor %}
+                              </p>
+                            </div>
+
+                            <div class="about">
+                              <h5>Subscription</h5>
+                              <p>{{account_obj.subscription_start_date|date:"d M Y"}} - {{account_obj.subscription_end_date|date:"d M Y"}} </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                
+                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                      <div class="card h-100">
+                        <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" action="{% url 'dance-academy:updateFee' obj.id %}">
+                            {% csrf_token %}
+                      
+                          <div class="row gutters">
+                            <div
+                              class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                            >
+                              <h6 class="mb-2 text-primary">
+                                Add Subscription
+                              </h6>
+                            </div>
+                            <div
+                              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                              <div class="form-group">
+                                <label for="id_current_plan">Choose Plan</label>
+                                <select
+                                  class="form-select"
+                                  id="id_current_plan"
+                                  name="current_plan"
+                                required>
+                                
+                                  {% for index, value in student_log_book.plan_type %}
+    
+                                  <option value="{{index}}">{{value}}</option>
+
+                                 {% endfor %}
+                                </select>
+
+                              </div>
+                            </div>
+                            <div
+                              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                              <div class="form-group">
+                                <label for="id_total_fees">Total Fee</label>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="total_fees"
+                                  name="total_fees"
+                                  placeholder="Enter Fee"
+                                  required/>
+                              </div>
+                            </div>
+
+                            <div
+                              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                              <div class="form-group">
+                                <label for="id_subscription_start_date">Subscription Start Date</label>
+                                <input
+                                  type="date"
+                                  class="form-control"
+                                  id="id_subscription_start_date"
+                                  name="subscription_start_date"
+                                
+    
+                               required/>
+                              </div>
+                            </div>
+
+
+                            <div
+                              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                              <div class="form-group">
+                                <label for="id_subscription_end_date">Subscription End Date</label>
+                                <input
+                                  type="date"
+                                  class="form-control"
+                                  id="id_subscription_end_date"
+                                  name="subscription_end_date"                                  
+                                required/>
+                              </div>
+                            </div>
+
+
+                            <div
+                              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                              <div class="form-group">
+                                <label for="id_paid_fees">Recieved Amount</label>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="id_paid_fees"
+                                  name="paid_fees"
+                                  placeholder="Enter Received Fee"
+                                  
+                                required/>
+                              </div>
+                            </div>
+                            <div
+                              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                              <div class="form-group">
+                                <label for="id_due"
+                                  >Due Amount</label
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  name="due"
+                                  id="id_due"
+                                  placeholder="Enter Any Due"
+                                  value="0"         
+                                />
+                              </div>
+                            </div>
+
+                            <div
+                              class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                            <div class="form-group">
+                                <label for="id_description">Any Notes:</label>
+                                <textarea class="form-control" id="id_description" name="description" rows="3"></textarea>
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="row gutters">
+                            <div
+                              class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                            >
+                              <div class="text-right">
+                                <a href="{% url 'dance-academy:studentList' %}"
+                                  ><button
+                                    type="button"
+                                    id="submit"
+                                    name="submit"
+                                    class="btn btn-secondary"
+                                  >
+                                    Cancel
+                                  </button></a
+                                >
+                                <button
+                                  type="submit"
+                                  id="submit"
+                                  name="submit"
+                                  class="btn btn-primary"
+                                >
+                                  Update
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+
+
+                        </form>
+
+                                        
+                <div class="row gutters mt-3">
+
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    
+                        <h6 class="mb-2 text-primary">
+                        
+                       Subscription History
+                      </h6>
+
+                    </div>
+                    
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Paid on</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Plan</th>
+                            <th scope="col">Fee</th>
+                            <th scope="col">Paid</th>
+                            <th scope="col">Due</th>
+                            <th scope="col">Action</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for log in all_account_log %}
+                               
+                            <tr>
+                                <td>{{log.date|date:"d M Y"}}</td>
+                                <td>{{log.subscription_start_date|date:"d M Y"}}</td>
+                                <td>{{log.subscription_end_date|date:"d M Y"}}</td>
+                                <td>
+                                    
+                     
+                                    {% for index,plan  in log.plan_type  %}
+                                    {% if index == log.current_plan %}
+                                    {{plan}}
+                                    {% endif %}
+                                    {% endfor %}
+                                        
+                                
+
+                                </td>
+                                <td>{{log.total_fees}}
+                                    
+                                </td>
+                                <td>{{log.paid_fees}}</td>
+                                <td>{{log.due}}</td>
+                                <td>
+
+                                    <a href="{% url 'dance-academy:studentAccountLogEdit' id=log.id %}" target="_blank">   <span class="mr-2 pl-3"> <i class="bi bi-eye" style="font-size: 15px;"></i> </span>
+                                    </a>
+                                  
+                                    <button class="btn btn-danger" data-toggle="modal" data-target="#my-modal">   
+
+                                        <span><i class="bi bi-trash fa-fw  fa-3x" style="font-size: 15px;"></i></span>
+                          
+                                    </button>
+
+                                    <a href="{% url 'dance-academy:feeReceipt' id=log.id %}" target="_blank">   <span class="ml-2"> <i class="bi bi-printer" style="font-size: 15px;"></i> </span>
+                                    </a>
+                                    
+                               
+                                </td>
+                                <div class="container d-flex justify-content-center">
+                
+                                    <div id="my-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content border-0">   
+                                                <div class="modal-body p-0">
+                                                    <div class="card border-0 p-sm-3 p-2 justify-content-center">
+                                                        <div class="card-header pb-0 bg-white border-0 "><div class="row"><div class="col ml-auto"><button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div> </div>
+                                                        <p class="font-weight-bold mb-2"> Are you sure you want to delete this ?</p><p class="text-muted "> </p>     </div>
+                                                       
+                                                          <div class="card-body px-sm-4 mb-2 pt-1 pb-0"> 
+                                                            <div class="row justify-content-end no-gutters"><div class="col-auto">
+                                                                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <form method="post" action="{% url 'dance-academy:studentAccountLogDelete'%}">
+                        
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="account_obj" value="{{ account_obj.id }}">
+                                                                    <input type="hidden" name="id" value="{{ log.id }}">
+                                                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </tr>
+                            {% endfor %}
+                                
+            
+                        </tbody>
+                      </table>
+               </div>
+        
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+    </div>
+
+
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+  </div>
+  
+
+        <!-- END tabs-nav -->
+
+        
+
+       
+  
+</body>
+<script>
+  var loadFile = function (event) {
+    var image = document.getElementById("output");
+    image.src = URL.createObjectURL(event.target.files[0]);
+  };
+</script>
+
+<script>
+  // Show the first tab and hide the rest
+  $("#tabs-nav li:first-child").addClass("active");
+  $(".tab-content").hide();
+  $(".tab-content:first").show();
+
+  // Click function
+  $("#tabs-nav li").click(function () {
+    $("#tabs-nav li").removeClass("active");
+    $(this).addClass("active");
+    $(".tab-content").hide();
+
+    var activeTab = $(this).find("a").attr("href");
+    $(activeTab).fadeIn();
+    return false;
+  });
+</script>
+
+{%endblock bodyblock %}

@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap');
+
+
+*{
+    font-family: 'Ibarra Real Nova', serif;
+    -webkit-font-smoothing: antialiased;
+
+    font-style: normal;
+    font-variant: normal;
+    line-height: inherit;
+    text-transform: none;
+
+}
+@media screen and (min-width: 500px) {
+
+.content{
+    font-size: 1vw;
+}
+
+.content-header{
+    font-size: 1vw;
+}
+}
